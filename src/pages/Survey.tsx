@@ -9,9 +9,6 @@ const surveyRoutes = [
 ];
 
 export const SurveyPage = () => {
-  // This will log the routes this component is configured to handle
-  console.log('Available survey sub-routes:', surveyRoutes.map(r => r.path));
-
   // useRoutes is an alternative to <Routes> that uses a config object
   const element = useRoutes(surveyRoutes);
 
