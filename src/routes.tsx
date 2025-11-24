@@ -30,7 +30,7 @@ const routes = {
     element: <AboutPage />,
   },
   survey: {
-    path: "/survey",
+    path: "/survey/*",
     element: <SurveyPage />,
   },
   svgSandbox: {
