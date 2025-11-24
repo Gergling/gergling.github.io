@@ -9,7 +9,6 @@ const surveyRoutes = [
 ];
 
 export const SurveyPage = () => {
-  // useRoutes is an alternative to <Routes> that uses a config object
   const element = useRoutes(surveyRoutes);
 
   return <PageContainer>
