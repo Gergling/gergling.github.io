@@ -5,12 +5,20 @@ import { Typography, useTheme } from '@gergling/ui-components';
 
 export const BlogRendererFigure = ({ value }: { value: SanityImageSource }) => {
   const { getBlogImageData } = useBlog();
-  const { caption, src, width, height } = useMemo(() => getBlogImageData(value), [getBlogImageData, value]);
+  const { alt, caption, src, width, height, status } = useMemo(
+    () => getBlogImageData(value),
+    [getBlogImageData, value]
+  );
   const { theme: { typography } } = useTheme();
+
+  if (status !== 'success') return (
+    <Typography variant='caption' color='error'>Image: '{alt}' is missing.</Typography>
+  );
 
   return (
     <div>
       <img
+        alt={alt}
         src={src}
         loading="lazy"
         style={{
