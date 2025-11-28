@@ -1,10 +1,5 @@
 import { FormControlLabel, Radio, RadioGroup as BaseRadioGroup } from "@mui/material";
-
-type RadioQuestionProps<T> = {
-  options: { label: string; value: T; }[];
-  selectedAnswer: T | undefined;
-  setSelectedAnswer: (answer: T) => void;
-};
+import { RadioQuestionProps } from "../types";
 
 export const RadioGroup = <T,>({
   options,

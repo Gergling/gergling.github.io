@@ -19,3 +19,9 @@ export type SurveyControlProps = {
   isPreviousEnabled?: boolean;
   nextButtonText?: string;
 };
+
+export type RadioQuestionProps<T> = {
+  options: { label: string; value: T; }[];
+  selectedAnswer: T | undefined;
+  setSelectedAnswer: (answer: T) => void;
+};
