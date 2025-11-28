@@ -1,10 +1,38 @@
+import styled from '@emotion/styled';
 import { Button, FormControl, FormLabel } from '@mui/material';
 import { Pane } from '@gergling/ui-components';
+import { interpolate, interpolateHue } from '../../../../common/utilities';
 import { RadioGroup } from '../../common/components/RadioGroup';
 import { useWCXSurvey } from '../hooks/use-survey';
 import { WCXQuestion, WCXQuestionKey } from '../types';
 import { useCallback, useMemo } from 'react';
 import { RadioQuestionProps } from '../../common/types';
+
+
+const StyledChip = styled.span<{ color: string; }>`
+  background-color: ${({ color }) => color};
+  color: ${({ theme }) => theme.colors.primary.on};
+`;
+
+const BackgroundColourChip = ({
+  value,
+}: {
+  value: number;
+}) => {
+  const {
+    color,
+    text,
+  } = useMemo(() => {
+    const text = Math.round(interpolate(value, 0, 1, 0, 100));
+    const hue = interpolateHue(value, 0, 1);
+    const color = `hsl(${hue}, 100%, 30%)`;
+    return {
+      color,
+      text,
+    };
+  }, [value]);
+  return <StyledChip color={color}>{text}%</StyledChip>;
+};
 
 const Question = ({
   answer,
@@ -45,7 +73,7 @@ const Question = ({
 
   if (!question.enabled) return null;
 
-  return <>
+  return <div>
     <FormControl>
       <FormLabel id="radio-buttons-group-label">
         {title}
@@ -56,7 +84,7 @@ const Question = ({
         setSelectedAnswer={handleAnswerSelection}
       />
     </FormControl>
-  </>;
+  </div>;
 };
 
 export const WCXSurvey = () => {
@@ -73,9 +101,12 @@ export const WCXSurvey = () => {
 
   return <Pane>
     {submitted
-      ? <>You rated this toilet: {quality}%. The data quality rating is {data}%.</>
+      ? <>
+        You rated this toilet: <BackgroundColourChip value={quality} />.
+        The data quality rating is <BackgroundColourChip value={data} />.
+      </>
       : <>
-          {questions.map((props) => <Question key={props.name} {...props} setAnswer={selectAnswer} />)}
+        {questions.map((props) => <Question key={props.name} {...props} setAnswer={selectAnswer} />)}
         <Button onClick={handleSubmit} disabled={!canSubmit}>Submit</Button>
       </>
     }

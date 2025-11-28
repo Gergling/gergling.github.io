@@ -12,8 +12,8 @@ export const useWCXSurvey = () => {
 
   const scores = useMemo(() => {
     const scores = getScores(answers);
-    const data = Math.round(scores.data * 100 / scores.weight);
-    const quality = Math.round(scores.quality * 100 / scores.data);
+    const data = scores.data / scores.weight;
+    const quality = scores.quality / scores.data;
     return {
       data,
       quality,
