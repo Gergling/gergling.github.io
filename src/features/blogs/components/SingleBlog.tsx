@@ -6,7 +6,7 @@ import { Seo } from "../../../common/components/Seo";
 import { BlogProvider } from "../context";
 import { useBlog, useBlogItemQuery } from "../hooks";
 import { ReadablePublishingTime } from "./ReadablePublishingTime";
-import { BlogRendererBlockContent } from "./content";
+import { BlogRendererBlockContent, BlogRendererImage } from "./content";
 
 type SingleBlogProps = { slug: string; };
 
@@ -42,7 +42,7 @@ const RenderBlog = ({
       />
       <Typography variant="h4" sx={{ textAlign: 'center' }}>{title}</Typography>
       <div style={{ textAlign: 'center' }}>
-        {image && <img src={image} alt={title} height="200" />}
+        {image && <BlogRendererImage alt={title} src={image} />}
       </div>
       <ReadablePublishingTime publishedAt={publishedAt} />
       <BlogRendererBlockContent value={body} />

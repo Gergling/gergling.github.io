@@ -1,11 +1,12 @@
+import { Typography, useTheme } from '@gergling/ui-components';
 import { SanityImageSource } from '@sanity/asset-utils';
 import { useMemo } from 'react';
 import { useBlog } from '../../hooks';
-import { Typography, useTheme } from '@gergling/ui-components';
+import { BlogRendererImage } from './Image';
 
 export const BlogRendererFigure = ({ value }: { value: SanityImageSource }) => {
   const { getBlogImageData } = useBlog();
-  const { alt, caption, src, width, height, status } = useMemo(
+  const { alt, caption, src, status } = useMemo(
     () => getBlogImageData(value),
     [getBlogImageData, value]
   );
@@ -16,21 +17,17 @@ export const BlogRendererFigure = ({ value }: { value: SanityImageSource }) => {
   );
 
   return (
-    <div>
-      <img
-        alt={alt}
-        src={src}
-        loading="lazy"
-        style={{
-          aspectRatio: width / height,
-        }}
-      />
-      <Typography variant='caption' sx={{
+    <figure style={{
+      margin: '16px 0', // Add some vertical margin for spacing
+    }}>
+      <BlogRendererImage alt={alt} src={src} />
+      <figcaption style={{
         fontFamily: typography.body1.fontFamily,
+        fontSize: typography.caption.fontSize,
         margin: 'auto',
         display: 'block',
         textAlign: 'center',
-      }}>{caption}</Typography>
-    </div>
+      }}>{caption}</figcaption>
+    </figure>
   )
 }
