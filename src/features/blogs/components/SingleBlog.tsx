@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { toHTML } from '@portabletext/to-html'
 import { Typography } from "@mui/material";
-import { BlockContent } from "../../../libs/sanity";
+import { BlockContent, SingleArticleBySlugQueryResult } from "../../../libs/sanity";
 import { Seo } from "../../../common/components/Seo";
 import { BlogProvider } from "../context";
 import { useBlog, useBlogItemQuery } from "../hooks";
@@ -11,19 +11,12 @@ import { BlogRendererBlockContent } from "./content";
 type SingleBlogProps = { slug: string; };
 
 const RenderBlog = ({
-  title,
+  body,
   image,
   publishedAt,
-  body,
-}: {
-  title: string;
-  slug: string;
-  image: string | null;
-  categories: {
-      description: string | null;
-      title: string | null;
-  }[] | null;
-  publishedAt: string | null;
+  title,
+  survey,
+}: SingleArticleBySlugQueryResult & {
   body: BlockContent;
 }) => {
   const { blogContainerRef } = useBlog();
@@ -53,6 +46,7 @@ const RenderBlog = ({
       </div>
       <ReadablePublishingTime publishedAt={publishedAt} />
       <BlogRendererBlockContent value={body} />
+      {survey && <div><a href={`/survey/${survey}`}>Click here to take the survey.</a></div>}
     </div>
   );
 };

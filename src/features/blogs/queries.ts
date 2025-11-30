@@ -27,7 +27,8 @@ const singleArticleBySlugQuery = defineQuery(`
   [0]
   {
     ${baseArticleFields}
-    body
+    body,
+    survey
   }
 `);
 

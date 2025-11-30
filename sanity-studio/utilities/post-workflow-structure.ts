@@ -53,23 +53,16 @@ function createWorkflowListItems(
   return WORKFLOW_SECTIONS.map(section => {
     return S.listItem()
       .title(section.title)
-      // .title(
-      //   ReactDOMServer.renderToStaticMarkup(createElement(TitleCounter, { title: section.title, filter: section.filter }))
-      // )
-      // .icon(() => S.documentTypeList(POST_SCHEMA_TYPE).getIcon())
-      .schemaType(POST_SCHEMA_TYPE)
+      .id(section.value)
       .child(
         S.documentList()
-          .title(`${section.title} Posts`)
-          // Use the specific filter defined above
+          .title(section.title + ' Posts')
+          .schemaType(POST_SCHEMA_TYPE) // 1. Explicitly set the schema type
+          .apiVersion('v2025-10-18')
           .filter(section.filter)
-          // Set a default ordering that makes sense for each list
+          .defaultLayout('default') // 2. CRUCIAL: Use the schema's default list layout
           .defaultOrdering([{ field: '_updatedAt', direction: 'desc' }])
-          .schemaType(POST_SCHEMA_TYPE)
-          // Ensure the API version is modern
-          .apiVersion('v2023-08-01') 
       )
-      .id(section.value);
   });
 }
 
@@ -93,13 +86,6 @@ export const postWorkflowStructure = (S: StructureBuilder, context: StructureRes
       // 2. The dynamic list of posts separated by their status
       // ...createWorkflowListItems(S, context),
       ...createWorkflowListItems(S),
-      // S.listItem()
-      //   .title('✨ Posts')
-      //   .child(
-      //     S.list()
-      //       .title('Post Workflow')
-      //       .items(createWorkflowListItems(S))
-      //   ),
 
       S.divider().title('Related'),
       

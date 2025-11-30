@@ -52,42 +52,55 @@ export type Post = {
   editorialChecklist?: Array<{
     _key: string;
   } & ChecklistItem>;
-  body?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "blockquote";
-    listItem?: "bullet";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
+  survey?: "wcx" | "wrm";
+  body?: BlockContent;
+};
+
+export type BlockContent = Array<{
+  children?: Array<{
+    marks?: Array<string>;
+    text?: string;
+    _type: "span";
     _key: string;
-  } | {
+  }>;
+  style?: "normal" | "h1" | "h2" | "h3" | "h4" | "blockquote";
+  listItem?: "bullet";
+  markDefs?: Array<{
+    href?: string;
+    _type: "link";
     _key: string;
-  } & Accordion | {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt: string;
-    caption?: string;
-    _type: "figure";
-    _key: string;
-  } | {
-    _key: string;
-  } & Microform>;
+  }>;
+  level?: number;
+  _type: "block";
+  _key: string;
+} | {
+  _key: string;
+} & Accordion | {
+  _key: string;
+} & Figure | {
+  _key: string;
+} & Microform>;
+
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
+};
+
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x: number;
+  y: number;
+  height: number;
+  width: number;
+};
+
+export type Slug = {
+  _type: "slug";
+  current: string;
+  source?: string;
 };
 
 export type Microform = {
@@ -127,31 +140,6 @@ export type Category = {
   title?: string;
   description?: string;
 };
-
-export type BlockContent = Array<{
-  children?: Array<{
-    marks?: Array<string>;
-    text?: string;
-    _type: "span";
-    _key: string;
-  }>;
-  style?: "normal" | "h1" | "h2" | "h3" | "h4" | "blockquote";
-  listItem?: "bullet";
-  markDefs?: Array<{
-    href?: string;
-    _type: "link";
-    _key: string;
-  }>;
-  level?: number;
-  _type: "block";
-  _key: string;
-} | {
-  _key: string;
-} & Accordion | {
-  _key: string;
-} & Figure | {
-  _key: string;
-} & Microform>;
 
 export type Author = {
   _id: string;
@@ -226,20 +214,15 @@ export type SanityImageDimensions = {
   aspectRatio: number;
 };
 
-export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
-  x: number;
-  y: number;
-  height: number;
-  width: number;
-};
-
-export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
-  top: number;
-  bottom: number;
-  left: number;
-  right: number;
+export type SanityImageMetadata = {
+  _type: "sanity.imageMetadata";
+  location?: Geopoint;
+  dimensions?: SanityImageDimensions;
+  palette?: SanityImagePalette;
+  lqip?: string;
+  blurHash?: string;
+  hasAlpha?: boolean;
+  isOpaque?: boolean;
 };
 
 export type SanityFileAsset = {
@@ -262,6 +245,13 @@ export type SanityFileAsset = {
   path?: string;
   url?: string;
   source?: SanityAssetSourceData;
+};
+
+export type SanityAssetSourceData = {
+  _type: "sanity.assetSourceData";
+  name?: string;
+  id?: string;
+  url?: string;
 };
 
 export type SanityImageAsset = {
@@ -287,17 +277,6 @@ export type SanityImageAsset = {
   source?: SanityAssetSourceData;
 };
 
-export type SanityImageMetadata = {
-  _type: "sanity.imageMetadata";
-  location?: Geopoint;
-  dimensions?: SanityImageDimensions;
-  palette?: SanityImagePalette;
-  lqip?: string;
-  blurHash?: string;
-  hasAlpha?: boolean;
-  isOpaque?: boolean;
-};
-
 export type Geopoint = {
   _type: "geopoint";
   lat?: number;
@@ -305,20 +284,7 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type Slug = {
-  _type: "slug";
-  current: string;
-  source?: string;
-};
-
-export type SanityAssetSourceData = {
-  _type: "sanity.assetSourceData";
-  name?: string;
-  id?: string;
-  url?: string;
-};
-
-export type AllSanitySchemaTypes = Post | Microform | Figure | ChecklistItem | Category | BlockContent | Author | Accordion | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export type AllSanitySchemaTypes = Post | BlockContent | SanityImageCrop | SanityImageHotspot | Slug | Microform | Figure | ChecklistItem | Category | Author | Accordion | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ../src/features/blogs/queries.ts
 // Variable: featuredArticlesQuery
@@ -334,7 +300,7 @@ export type FeaturedArticlesQueryResult = Array<{
   publishedAt: string | null;
 }>;
 // Variable: singleArticleBySlugQuery
-// Query: *[_type == "post" && slug.current == $slug]  | order(publishedAt desc)  [0]  {      title,  "slug": slug.current,  "image": mainImage.asset->url,  categories[]->{description, title},  publishedAt,    body  }
+// Query: *[_type == "post" && slug.current == $slug]  | order(publishedAt desc)  [0]  {      title,  "slug": slug.current,  "image": mainImage.asset->url,  categories[]->{description, title},  publishedAt,    body,    survey  }
 export type SingleArticleBySlugQueryResult = {
   title: string;
   slug: string;
@@ -344,42 +310,8 @@ export type SingleArticleBySlugQueryResult = {
     title: string | null;
   }> | null;
   publishedAt: string | null;
-  body: Array<{
-    _key: string;
-  } & Accordion | {
-    _key: string;
-  } & Microform | {
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "normal";
-    listItem?: "bullet";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  } | {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt: string;
-    caption?: string;
-    _type: "figure";
-    _key: string;
-  }> | null;
+  body: BlockContent | null;
+  survey: "wcx" | "wrm" | null;
 } | null;
 // Variable: listArticlesQuery
 // Query: *[_type == "post" && status == "ready"]  | order(publishedAt desc)  {      title,  "slug": slug.current,  "image": mainImage.asset->url,  categories[]->{description, title},  publishedAt,  }
@@ -411,7 +343,7 @@ import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     "\n  *[_type == \"post\" && status == \"ready\"]\n  | order(publishedAt desc)\n  [0...3]\n  {\n    \n  title,\n  \"slug\": slug.current,\n  \"image\": mainImage.asset->url,\n  categories[]->{description, title},\n  publishedAt,\n\n  }\n": FeaturedArticlesQueryResult;
-    "\n  *[_type == \"post\" && slug.current == $slug]\n  | order(publishedAt desc)\n  [0]\n  {\n    \n  title,\n  \"slug\": slug.current,\n  \"image\": mainImage.asset->url,\n  categories[]->{description, title},\n  publishedAt,\n\n    body\n  }\n": SingleArticleBySlugQueryResult;
+    "\n  *[_type == \"post\" && slug.current == $slug]\n  | order(publishedAt desc)\n  [0]\n  {\n    \n  title,\n  \"slug\": slug.current,\n  \"image\": mainImage.asset->url,\n  categories[]->{description, title},\n  publishedAt,\n\n    body,\n    survey\n  }\n": SingleArticleBySlugQueryResult;
     "\n  *[_type == \"post\" && status == \"ready\"]\n  | order(publishedAt desc)\n  {\n    \n  title,\n  \"slug\": slug.current,\n  \"image\": mainImage.asset->url,\n  categories[]->{description, title},\n  publishedAt,\n\n  }\n": ListArticlesQueryResult;
     "\n  {\n    \"ideaCount\": count(*[_type == \"post\" && status == \"idea\"]),\n    \"upcomingList\": *[\n      _type == \"post\" &&\n      status == \"upcoming\"\n    ] | order(_createdAt asc) {\n      title,\n      \"slug\": slug.current,\n      \"hasBody\": defined(body),\n      \"hasImage\": defined(mainImage)\n    },\n    \"publishDates\": *[\n      _type == \"post\" &&\n      publishedAt != null\n    ].publishedAt | order(publishedAt desc)\n  }\n": ArticleProgressStatusQueryResult;
   }

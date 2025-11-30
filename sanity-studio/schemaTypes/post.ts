@@ -1,5 +1,6 @@
 import {defineField, defineType} from 'sanity'
 import { ChecklistItem } from '../../src/libs/sanity/sanity.types';
+import { SURVEYS } from '../constants';
 
 export default defineType({
   name: 'post',
@@ -98,6 +99,15 @@ export default defineType({
       },
     }),
     defineField({
+      name: 'survey',
+      title: 'Survey',
+      type: 'string',
+      options: {
+        list: SURVEYS.map(({ name, label }) => ({ title: label, value: name })),
+        layout: 'dropdown',
+      },
+    }),
+    defineField({
       name: 'body',
       title: 'Body',
       type: 'blockContent',
@@ -107,20 +117,20 @@ export default defineType({
   preview: {
     select: {
       title: 'title',
-      author: 'author.name',
+      subtitle: 'author.name',
       media: 'mainImage',
       checklist: 'editorialChecklist',
       standard: 'standard',
     },
     prepare(selection) {
-      const { author, checklist, standard } = selection;
+      const { subtitle, checklist, standard } = selection;
       const completed = (checklist as ChecklistItem[]).filter((item) => item.isComplete === true).length;
       const progress = checklist ? `Progress: ${completed}/${checklist.length}` : false;
       const description = [`Standard: ${standard}`, progress].filter(Boolean).join(' - ');
       return {
         ...selection,
-        subtitle: author && `by ${author}`,
-        description,
+        subtitle: subtitle && `by ${subtitle}`,
+        description
       };
     },
   },

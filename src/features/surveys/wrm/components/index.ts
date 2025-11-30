@@ -1,2 +1,2 @@
 export * from './ArchetypeDisplay';
-export * from './PersonalityType';
+export * from './WRMPersonalityType';

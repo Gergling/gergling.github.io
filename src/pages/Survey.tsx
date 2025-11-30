@@ -1,11 +1,10 @@
 import { useRoutes, Link } from "react-router-dom";
 import { PageContainer } from "../common/components/styles";
-import { PersonalityType } from "../features/surveys/wrm";
-import { WCXSurvey } from "../features/surveys/wcx";
+import { SURVEYS } from "../features/surveys";
+import { createElement } from "react";
 
 const surveyRoutes = [
-  { path: "/wcx", element: <WCXSurvey /> },
-  { path: "/wrm", element: <PersonalityType /> },
+  ...SURVEYS.map(({ name, element }) => ({ path: `/${name}`, element: createElement(element) })),
   { path: "*", element: <>Go <Link to="/">away</Link>.</> },
 ];
 

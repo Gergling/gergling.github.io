@@ -61,14 +61,13 @@ const getImageData = (blogElementWidth: number, value: SanityImageSource): Image
 };
 
 export const useBlog = () => {
-  const { width: blogElementWidth } = useBlogContext();
+  const { setWidth, width: blogElementWidth } = useBlogContext();
   const getBlogImageData = useCallback(
     (value: SanityImageSource) => getImageData(blogElementWidth, value),
     [blogElementWidth]
   );
   const blogContainerRef = useRef(null);
   const imgWidth = useElementSize(blogContainerRef, (element) => element.offsetWidth);
-  const { setWidth } = useBlogContext();
 
   useEffect(() => {
     setWidth(imgWidth);
