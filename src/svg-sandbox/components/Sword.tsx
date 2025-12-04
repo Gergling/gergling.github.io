@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { SVG_COLORS } from "../config";
+import { SVG_COLORS } from "../constants";
 import { SvgComponentProps } from "../types";
 import { getSize, mapSymmetry } from "../utilities/point";
 import { mapPolygons } from "../utilities/polygon";

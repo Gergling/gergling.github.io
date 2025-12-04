@@ -8,7 +8,7 @@ import { Dagger } from "./Dagger";
 import { MagicStaff } from "./MagicStaff";
 import { Sword } from "./Sword";
 import { Tie } from "./Tie";
-import { SVG_COLORS, SVG_GRADIENT_GOLD_LINEAR, SVG_GRADIENT_GOLD_RADIAL } from "../config";
+import { SVG_COLORS, SVG_GRADIENT_GOLD_LINEAR, SVG_GRADIENT_GOLD_RADIAL } from "../constants";
 import { Palette } from "./Palette";
 import { SvgComponentProps } from "../types";
 

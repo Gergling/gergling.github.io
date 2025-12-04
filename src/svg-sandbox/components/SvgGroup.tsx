@@ -1,7 +1,6 @@
 import { PropsWithChildren, SVGProps } from "react";
-import { SvgPosition } from "../types";
 
-type SvgGroupProps = SvgPosition & PropsWithChildren & SVGProps<SVGGElement>;
+type SvgGroupProps = PropsWithChildren & SVGProps<SVGGElement>;
 
 export const SvgGroup = ({
   children,

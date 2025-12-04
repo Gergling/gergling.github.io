@@ -18,7 +18,7 @@ export const BlogRendererFigure = ({ value }: { value: SanityImageSource }) => {
 
   return (
     <figure style={{
-      margin: '16px 0', // Add some vertical margin for spacing
+      margin: '16px 0',
     }}>
       <BlogRendererImage alt={alt} src={src} />
       <figcaption style={{

@@ -1,4 +1,4 @@
-import { SVG_COLORS } from "../config";
+import { SVG_COLORS } from "../constants";
 import { SvgComponentProps } from "../types";
 import { arc, getArcRadius, getArcTarget } from "../utilities/path";
 import { getSize, mapSymmetry } from "../utilities/point";

@@ -1,5 +1,5 @@
 import { PageContainer } from "../common/components/styles";
-import { WromBlogMainImage } from "../svg-sandbox/components/WromBlogMainImage";
+import { PieChartWrom } from "../svg-sandbox/components/PieChartWrom";
 
 export const SvgSandboxPage: React.FC = () => {
   return (
@@ -28,7 +28,7 @@ export const SvgSandboxPage: React.FC = () => {
         height: 200,
         border: 'solid 1px #444',
       }}>
-        <WromBlogMainImage />
+        <PieChartWrom />
       </div>
     </PageContainer>
   );
