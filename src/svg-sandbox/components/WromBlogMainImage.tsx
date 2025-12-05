@@ -1,6 +1,5 @@
 import { useTheme } from "@gergling/ui-components";
 import { SvgGroup } from "./SvgGroup";
-import { SvgGuidelines } from "./SvgGuidelines";
 import { HornedHelmet } from "./HornedHelmet";
 import { EyeMask } from "./EyeMask";
 import { PointyHat } from "./PointyHat";
@@ -8,8 +7,7 @@ import { Dagger } from "./Dagger";
 import { MagicStaff } from "./MagicStaff";
 import { Sword } from "./Sword";
 import { Tie } from "./Tie";
-import { SVG_COLORS, SVG_GRADIENT_GOLD_LINEAR, SVG_GRADIENT_GOLD_RADIAL } from "../constants";
-import { Palette } from "./Palette";
+import { SVG_GRADIENT_GOLD_LINEAR, SVG_GRADIENT_GOLD_RADIAL } from "../constants";
 import { SvgComponentProps } from "../types";
 
 const defIds = [
@@ -78,12 +76,6 @@ const Mage: React.FC<
 export const WromBlogMainImage = () => {
   // TODO: Text fill colour can be themed.
   // TODO: SVG tag can be standardised, probably.
-  // const { getNextId } = useSvgDefs();
-  const { primary } = useColours();
-  const palette = {
-    ...SVG_COLORS,
-    primary
-  };
   return (
     <>
       <svg width="100%" height="200" viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg">
