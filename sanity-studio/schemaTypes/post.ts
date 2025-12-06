@@ -2,6 +2,20 @@ import {defineField, defineType} from 'sanity'
 import { ChecklistItem } from '../../src/libs/sanity/sanity.types';
 import { SURVEYS } from '../constants';
 
+const standards = [
+  { title: 'Incomplete', value: 'incomplete', icon: '🖋️' },
+  { title: 'Ok', value: 'ok', icon: '🥉' },
+  { title: 'Good', value: 'good', icon: '🥈'},
+  { title: 'Excellent', value: 'excellent', icon: '🥇' },
+  { title: 'Perfect', value: 'perfect', icon: '🏆' },
+];
+
+const statuses = [
+  { title: 'Idea', value: 'idea', icon: '💡' },
+  { title: 'Upcoming', value: 'upcoming', icon: '⏳' },
+  { title: 'Ready', value: 'ready', icon: '✅' },
+];
+
 export default defineType({
   name: 'post',
   title: 'Post',
@@ -37,11 +51,7 @@ export default defineType({
       title: 'Status',
       type: 'string',
       options: {
-        list: [
-          { title: 'Idea', value: 'idea' },
-          { title: 'Upcoming', value: 'upcoming' },
-          { title: 'Ready', value: 'ready' },
-        ],
+        list: statuses,
         layout: 'dropdown',
       },
       initialValue: 'idea',
@@ -73,13 +83,7 @@ export default defineType({
       title: 'Standard',
       type: 'string',
       options: {
-        list: [
-          { title: 'Incomplete', value: 'incomplete' },
-          { title: 'Ok', value: 'ok' },
-          { title: 'Good', value: 'good' },
-          { title: 'Excellent', value: 'excellent' },
-          { title: 'Perfect', value: 'perfect' },
-        ],
+        list: standards,
         layout: 'dropdown',
       },
       initialValue: 'incomplete',
@@ -121,12 +125,16 @@ export default defineType({
       media: 'mainImage',
       checklist: 'editorialChecklist',
       standard: 'standard',
+      status: 'status',
+      survey: 'survey',
     },
     prepare(selection) {
-      const { subtitle, checklist, standard } = selection;
+      const { subtitle, checklist, standard, status, survey } = selection;
       const completed = (checklist as ChecklistItem[]).filter((item) => item.isComplete === true).length;
       const progress = checklist ? `Progress: ${completed}/${checklist.length}` : false;
-      const description = [`Standard: ${standard}`, progress].filter(Boolean).join(' - ');
+      const standardIcon = standards.find((s) => s.value === standard)?.icon || '';
+      const statusIcon = statuses.find((s) => s.value === status)?.icon || '';
+      const description = [`${standardIcon}${statusIcon}`, progress, survey ? `[${survey}]` : undefined].filter(Boolean).join(', ');
       return {
         ...selection,
         subtitle: subtitle && `by ${subtitle}`,
