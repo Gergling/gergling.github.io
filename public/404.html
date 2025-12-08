@@ -11,13 +11,13 @@
     <title>Routing Redirect</title>
     <script>
       // Function to get the path, adjusting for the repository name (if needed)
-      var path = window.location.pathname;
+      var redirection = window.location.pathname + window.location.search;
       
       // If your repository is published at a sub-path (e.g., /grx-gregs-ratings/), 
       // you must adjust the path before redirecting. 
       // The path variable already includes the sub-path.
-      
-      sessionStorage.setItem('redirect', path);
+
+      sessionStorage.setItem('redirect', redirection);
       
       // Redirect to the main index.html file.
       // The base of your application is where index.html lives.

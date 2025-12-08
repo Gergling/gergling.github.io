@@ -24,6 +24,7 @@
     "@mui/material": "^7.3.2",
     "@portabletext/react": "^4.0.3",
     "@portabletext/to-html": "^3.0.0",
+    "@sanity/block-content-to-markdown": "^1.0.0",
     "@sanity/client": "^7.11.1",
     "@tanstack/react-query": "^5.90.2",
     "react": "19.1.1",

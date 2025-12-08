@@ -1,43 +1,28 @@
-import { useMemo } from "react";
-import { toHTML } from '@portabletext/to-html'
 import { Typography } from "@mui/material";
-import { BlockContent, SingleArticleBySlugQueryResult } from "../../../libs/sanity";
 import { Seo } from "../../../common/components/Seo";
 import { BlogProvider } from "../context";
 import { useBlog, useBlogItemQuery } from "../hooks";
 import { ReadablePublishingTime } from "./ReadablePublishingTime";
 import { BlogRendererBlockContent, BlogRendererImage } from "./content";
+import { BlogArticle } from "../types";
 
 type SingleBlogProps = { slug: string; };
 
-const RenderBlog = ({
-  body,
-  image,
-  publishedAt,
-  title,
-  survey,
-}: SingleArticleBySlugQueryResult & {
-  body: BlockContent;
-}) => {
-  const { blogContainerRef } = useBlog();
-
-  const blogDescription = useMemo(() => {
-    const html = toHTML(body, { onMissingComponent: false });
-    const text = html.replace(/<\/?[^>]+(>|$)/g, "").trim();
-    if (text.length < 150) return text;
-
-    const truncatedByLength = text.substring(0, 150);
-    const lastSpace = truncatedByLength.lastIndexOf(' ');
-    const truncatedByWord = lastSpace !== -1 ? truncatedByLength.substring(0, lastSpace) : truncatedByLength;
-    const ellipsisText = `${truncatedByWord}...`;
-    return ellipsisText;
-  }, [body]);
+const RenderBlog = (blog: BlogArticle) => {
+  const {
+    body,
+    image,
+    publishedAt,
+    survey,
+    title,
+  } = blog;
+  const { blogContainerRef, description } = useBlog(blog);
 
   return (
     <div ref={blogContainerRef}>
       <Seo
         title={title}
-        description={blogDescription}
+        description={description || ''}
         image={image ?? ''}
       />
       <Typography variant="h4" sx={{ textAlign: 'center' }}>{title}</Typography>

@@ -5,10 +5,10 @@ import { useBlog } from '../../hooks';
 import { BlogRendererImage } from './Image';
 
 export const BlogRendererFigure = ({ value }: { value: SanityImageSource }) => {
-  const { getBlogImageData } = useBlog();
+  const { getImageData } = useBlog();
   const { alt, caption, src, status } = useMemo(
-    () => getBlogImageData(value),
-    [getBlogImageData, value]
+    () => getImageData(value),
+    [getImageData, value]
   );
   const { theme: { typography } } = useTheme();
 
