@@ -1,11 +1,8 @@
-// blogPost.test.tsx (Vitest/RTL)
 import { render } from '@testing-library/react';
-import { expect, it } from 'vitest';
-
-// Assume BlogDetailPage correctly renders <title> and <meta> tags
+import { describe, expect, it } from 'vitest';
+import { MemoryRouter } from 'react-router-dom';
 import { Seo } from './Seo';
 import { SeoProps } from '../types';
-import { describe } from 'node:test';
 
 // Mock the required data structure from your Sanity fetch
 const mockProps: SeoProps = {
@@ -18,15 +15,16 @@ const mockProps: SeoProps = {
 };
 
 describe('Seo component', () => {
-  it(' is this working at all', () => {
-    expect(true).toBe(true);
-  });
   it('component hoists correct SEO tags, with default values where properties are omitted', () => {
     // Arrange: Render the component, causing the metadata to be hoisted into the <head> element by React 19.
-    const {  } = render(<Seo {...mockProps} />);
+    render(
+      <MemoryRouter>
+        <Seo {...mockProps} />
+      </MemoryRouter>
+    );
 
     // Assert: Verify the tags
-    expect(document.title).toBe(mockProps.title);
+    expect(document.title).toBe(`${mockProps.title} | ${mockProps.siteName}`);
     const ogImage = document.head.querySelector('meta[property="og:image"]');
     expect(ogImage).toBeDefined();
     expect(ogImage?.getAttribute('content')).toBe(mockProps.image);

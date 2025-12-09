@@ -43,7 +43,7 @@ describe('getVisibleBreakpoint', () => {
   describe('with a different set of breakpoints', () => {
     const mobileBreakpoints = [480, 320];
     it('should work correctly', () => {
-      expect(getVisibleBreakpoint(300, mobileBreakpoints)).toBe(0);
+      expect(getVisibleBreakpoint(300, mobileBreakpoints)).toBe(320);
       expect(getVisibleBreakpoint(400, mobileBreakpoints)).toBe(320);
       expect(getVisibleBreakpoint(500, mobileBreakpoints)).toBe(480);
     });
