@@ -23,3 +23,6 @@ jobs:
 
       - name: Type Check
         run: tsc --project tsconfig.production.json
+
+      - name: Run Tests with Coverage
+        run: npm test -- --coverage
