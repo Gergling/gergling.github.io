@@ -16,3 +16,10 @@ export const StyledPanelContainer = styled.div`
     margin-bottom: 0;
   }
 `;
+
+export const StyledResponsivePageContainer = styled(PageContainer)<{
+  width: number;
+}>`
+  min-width: ${({ width }) => width}rem;
+  width: ${({ width }) => width}rem;
+`;

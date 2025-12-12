@@ -1,26 +1,17 @@
 import { FeaturedBlogs } from '../features/blogs/components/FeaturedBlogs';
 import { RandometricsPane } from '../features/randometrics';
-import { useElasticResponse } from '../features/elastic-response';
-import { useMemo } from 'react';
-import { HomePageContainer } from './Home.style';
 import { Seo } from '../common/components/Seo';
+import { PageContainer } from '../common/components/styles';
 
 export const HomePage: React.FC = () => {
-  const { getWidth } = useElasticResponse();
-  const width = useMemo(
-    // TODO: This number might be possible to hardcode in the project somewhere.
-    () => getWidth(7),
-    [getWidth]
-  );
-
   return (
-    <HomePageContainer width={width}>
+    <PageContainer>
       <Seo
         title="Dashboard"
         description="Gregory, Michael & Davies cruel and unusual measurements, ratings and categorisations."
       />
       <RandometricsPane />
       <FeaturedBlogs />
-    </HomePageContainer>
+    </PageContainer>
   );
 };

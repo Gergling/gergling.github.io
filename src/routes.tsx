@@ -39,10 +39,10 @@ const routes = {
   },
 } as const;
 
-type AppRoutes = RouteValidation<typeof routes>;
-type RouteName = keyof AppRoutes;
+export type AppRoutes = RouteValidation<typeof routes>;
+export type AppRouteName = keyof AppRoutes;
 
-export const getRoute = (name: RouteName) => routes[name];
+export const getRoute = (name: AppRouteName) => routes[name];
 export const getRoutes = () => Object
   .entries(routes)
   .map(([
