@@ -1,3 +1,5 @@
+import { SelectOption } from "../../../common/types";
+
 export type WCXQuestionKey =
   | 'stall'
   | 'toiletPaper'
@@ -17,10 +19,8 @@ export type WCXAnswers = {
 
 type AnswerKey = WCXQuestionKey | 'done';
 
-export type WCXConfigQuestionOption = {
+export type WCXConfigQuestionOption = SelectOption & {
   next: AnswerKey;
-  text: string;
-  value: string;
 } & ({
   score: number;
 } | {
